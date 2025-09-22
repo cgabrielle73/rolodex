@@ -1,14 +1,21 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from './Card';
 
 const App = () => {
-  const arr = ['a', 'b', 'c', 'd'];
+  const [monsters, setMonsters] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((data) => setMonsters(data))
+  }, [])
+
   return (
     <>
       {
-        arr.map((name, index) => {
-          return <Card name={name} key={`${name}-${index}`}/>
+        monsters.map(({ name, email }, index) => {
+          return <Card name={name} email={email} key={`${name}-${index}`}/>
         })
       }
     </>
